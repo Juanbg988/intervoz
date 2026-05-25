@@ -115,7 +115,7 @@ $resultLenguas = mysqli_query($conn, $sqlLenguas);
 
         // Query basado exactamente en las columnas de tu tabla 'Usuario'
         $sql = "INSERT INTO usuario
-                (nombre, ape_pat, ape_mat, correo, contraseña) 
+                (nombre, ape_pat, ape_mat, correo, password) 
                 VALUES
                 ('$nombre', '$ape_pat', '$ape_mat', '$correo', '$pass')";
 
