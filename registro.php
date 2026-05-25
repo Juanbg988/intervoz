@@ -191,6 +191,7 @@ $resultLenguas = mysqli_query($conn, $sqlLenguas);
     }
     ?>
 </div>
+<script src="assets/js/config.js"></script>
 <script src="assets/js/registro.js"></script>
 </body>
 </html>
