@@ -52,7 +52,7 @@ if(isset($_SESSION['id_usuario'])){
                     SELECT usuario.*, perfil.rol
                     FROM usuario
                     INNER JOIN perfil
-                    ON Usuario.id_usuario = perfil.id_usuario
+                    ON usuario.id_usuario = perfil.id_usuario
                     WHERE correo='$correo'
                     AND password='$pass'
                 ";
