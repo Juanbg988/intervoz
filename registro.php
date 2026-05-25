@@ -114,14 +114,14 @@ $resultLenguas = mysqli_query($conn, $sqlLenguas);
 
 
         // Query basado exactamente en las columnas de tu tabla 'Usuario'
-        $sql = "INSERT INTO Usuario
+        $sql = "INSERT INTO usuario
                 (nombre, ape_pat, ape_mat, correo, contraseña) 
                 VALUES
                 ('$nombre', '$ape_pat', '$ape_mat', '$correo', '$pass')";
 
         if(mysqli_query($conn, $sql)){
             $id_usuario = mysqli_insert_id($conn);
-            $sqlPerfil = "INSERT INTO Perfil
+            $sqlPerfil = "INSERT INTO perfil
                             (rol, estado, fecha_creacion, id_usuario)
                             VALUES
                             ('$rol', 'activo', NOW(), '$id_usuario')";
