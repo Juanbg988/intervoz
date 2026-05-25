@@ -49,12 +49,12 @@ if(isset($_SESSION['id_usuario'])){
         $pass = $_POST['pass'];
 
         $query = "
-                    SELECT Usuario.*, Perfil.rol
-                    FROM Usuario
-                    INNER JOIN Perfil
-                    ON Usuario.id_usuario = Perfil.id_usuario
+                    SELECT usuario.*, perfil.rol
+                    FROM usuario
+                    INNER JOIN perfil
+                    ON Usuario.id_usuario = perfil.id_usuario
                     WHERE correo='$correo'
-                    AND contraseña='$pass'
+                    AND password='$pass'
                 ";
         $resultado = mysqli_query($conn, $query);
 

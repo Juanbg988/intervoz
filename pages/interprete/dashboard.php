@@ -81,10 +81,14 @@ $id_interprete = $interprete['id_interprete'];
       </div>
     </div>
   </div>
+  <script src="../../assets/js/config.js"></script>
 <script src="../../assets/js/script.js"></script>
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script>
-const socket = io('http://localhost:3000');
+const socket = io('https://intervoz-socket.onrender.com', {
+    transports: ['websocket'],
+    secure: true
+});
 
 // VARIABLES
 const ID_INTERPRETE =
@@ -100,7 +104,7 @@ REGISTRAR INTERPRETE
 async function registrarInterprete(){
   try{
     const response =
-    await fetch('../../api/obtenerVariantesInterprete.php');
+    await fetch(`${API_URL}/api/obtenerVariantesInterprete.php`);
 
     const data =
     await response.json();
@@ -181,7 +185,7 @@ async function toggleAvailability(){
     ===============================
     */
     try{
-      await fetch('../../api/disponibilidad.php', {
+      await fetch(`${API_URL}/api/disponibilidad.php`, {
 
           method:'POST',
 

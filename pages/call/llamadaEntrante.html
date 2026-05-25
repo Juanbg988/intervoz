@@ -26,11 +26,15 @@
     <p style="font-size:12px;color:var(--text3);margin-top:16px">Entrante</p>
     </div>
 </div>
+<script src="../../assets/js/config.js"></script>
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script>
-const socket = io('http://localhost:3000');
-    const id_interprete =
-localStorage.getItem('id_interprete');
+const socket = io(SOCKET_URL, {
+    transports: ['websocket'],
+    secure: true
+});
+
+const id_interprete = localStorage.getItem('id_interprete');
 
 const lenguas =
 JSON.parse(

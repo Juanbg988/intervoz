@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
         const response =
         await fetch(
-            `/intervoz/api/obtenerMunicipios.php?id_lengua=${idLengua}`
+            `${API_URL}/api/obtenerMunicipios.php?id_lengua=${idLengua}`
         );
 
         const municipios =

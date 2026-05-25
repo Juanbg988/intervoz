@@ -28,7 +28,7 @@ async function iniciarLlamadaSolicitante(){
 
     const responseVariante =
     await fetch(
-        `../../api/obtenerVariantes.php?id_lengua=${idLengua}&id_municipio=${idMunicipio}`
+        `${API_URL}/api/obtenerVariantes.php?id_lengua=${idLengua}&id_municipio=${idMunicipio}`
     );
 
     const varianteData =
