@@ -87,7 +87,7 @@ $resultLenguas = mysqli_query($conn, $sqlLenguas);
     </div>
 
 </div>
-
+<script src="../../assets/js/config.js"></script>
 <script src="../../assets/js/script.js"></script>
 <script>
 
@@ -100,7 +100,7 @@ document
 
     const response =
     await fetch(
-        `../../api/obtenerMunicipios.php?id_lengua=${idLengua}`
+        `${API_URL}/api/obtenerMunicipios.php?id_lengua=${idLengua}`
     );
 
     const municipios =
@@ -131,13 +131,6 @@ const socket = io('https://intervoz-socket.onrender.com', {
     transports: ['websocket'],
     secure: true
 });
-</script>
-<script>
-
-socket.emit('registrarSolicitante', {
-    id_usuario: <?= $_SESSION['id_usuario'] ?>
-});
-
 </script>
 <script>
 
