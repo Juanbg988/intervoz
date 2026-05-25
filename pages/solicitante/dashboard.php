@@ -27,7 +27,7 @@ $resultLenguas = mysqli_query($conn, $sqlLenguas);
 </head>
 <body>
 
-<div class="card" style="width:600px; height:550px; position: relative;">
+<div class="card" style="width:600px; height:360px; position: relative;">
     
     <div style="position: absolute; top: -25px; right: 10px; font-weight: bold; color: #555;">
         Solicitante

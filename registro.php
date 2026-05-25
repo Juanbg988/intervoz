@@ -124,7 +124,7 @@ $resultLenguas = mysqli_query($conn, $sqlLenguas);
             $sqlPerfil = "INSERT INTO perfil
                             (rol, estado, fecha_creacion, id_usuario)
                             VALUES
-                            ('$rol', 'activo', NOW(), '$id_usuario')";
+                            ('$rol', 1, NOW(), '$id_usuario')";
 
             mysqli_query($conn, $sqlPerfil);
 
