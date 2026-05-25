@@ -53,7 +53,7 @@ async function iniciarLlamadaSolicitante(){
     */
 
     const response =
-    await fetch("../../api/crearSolicitud.php", {
+    await fetch(`${API_URL}/api/crearSolicitud.php`, {
         method: "POST",
         headers:{
             "Content-Type":"application/json"
@@ -102,7 +102,7 @@ async function cancelarLlamada(){
     localStorage.getItem('id_solicitud');
 
     await fetch(
-        '../../api/cancelarSolicitud.php',
+        `${API_URL}/api/cancelarSolicitud.php`,
         {
             method:'POST',
 
