@@ -16,34 +16,47 @@
     --r3:       8px;
 }
 
-body {
+
+/* =========================================================
+    BODY
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html, body{
+    width:100%;
+    min-height:100%;
+    overflow-x:hidden;
+}
+
+body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg);
-    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 .card {
     background: white;
+    width: 350px;
+    max-width: 600px;
     padding: 2rem;
     border-radius: var(--r2);
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    width: 350px;
 }
 
 h2 {
-    margin: 0;
-    padding: 0;
     color: var(--primary);
     text-align: center;
 }
 
 h3 {
-    margin: 0;
-    padding: 0;
+    margin: 8px;
 }
 
 p {
@@ -52,13 +65,14 @@ p {
     color: #666;
 }
 
-input {
+input, select, textarea {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-sizing: border-box;
+    cursor:pointer;
 }
 
 button {
@@ -98,9 +112,6 @@ button:hover { background: #2980b9; }
 }
 
 .btn-municipio {
-    padding: 0;
-    width: 60px;
-    height: 40px;
     font-size: 20px;
 }
 
