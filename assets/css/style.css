@@ -559,3 +559,135 @@ LENGUAS
     font-weight: 700;
     font-size: 18px;
 }
+
+/* =========================================================
+   FIX RESPONSIVE INTERVOZ
+========================================================= */
+
+/* 1. Opciones de registro */
+.role-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.role-btn{
+    width: 100%;
+    min-width: 0;
+}
+
+/* 3. Dashboard solicitante */
+.quick-action{
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.quick-action .form-group{
+    width: 100%;
+}
+
+.quick-action select{
+    height: 46px;
+}
+
+.btn-municipio{
+    width: 46px !important;
+    min-width: 46px;
+    height: 46px;
+    padding: 0 !important;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.btn-sm{
+    width: 40px !important;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 !important;
+}
+
+/* 4. Dashboard intérprete */
+.langs-display{
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.lang-chip{
+    max-width: 100%;
+    word-break: break-word;
+}
+
+.toggle-track{
+    width: 48px !important;
+    height: 26px !important;
+    border-radius: 999px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.toggle-thumb{
+    width: 20px !important;
+    height: 20px !important;
+    top: 3px !important;
+    left: 3px !important;
+}
+
+.toggle-track.on .toggle-thumb{
+    left: 25px !important;
+}
+
+/* Mobile */
+@media (max-width: 600px){
+
+    .role-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .card{
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .quick-action{
+        padding: 18px 14px;
+    }
+
+    .quick-action .form-group[style*="display: flex"]{
+        flex-direction: row !important;
+        gap: 8px !important;
+    }
+
+    .quick-action select{
+        min-width: 0;
+    }
+
+    .btn-municipio{
+        width: 46px !important;
+        min-width: 46px;
+        height: 46px;
+    }
+
+    .availability-toggle{
+        gap: 10px;
+    }
+
+    .langs-display{
+        flex-direction: column;
+    }
+
+    .lang-chip{
+        width: 100%;
+        border-radius: 12px;
+    }
+}

@@ -11,18 +11,18 @@
     PAGE: ESPERANDO ACEPTACIÓN (SOLICITANTE)
     ============================================================ -->
 <div class="page active" id="page-waiting">
-  <div class="card">
+    <div class="card">
     <!--<div class="incoming-label" style="color:var(--coral)">Buscando intérprete</div>-->
     <div style="font-family:var(--font-h);font-size:20px;font-weight:800;margin-bottom:6px">Buscando intérprete...</div>
     <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:20px">
-      Notificando a todos los intérpretes de<br/><strong id="waiting-lang-label" style="color:var(--coral)">{lengua}</strong> disponibles.
+        Notificando a todos los intérpretes de<br/><strong id="waiting-lang-label" style="color:var(--coral)">{lengua}</strong> disponibles.
     </p> <!-- ASIGNAR LENGUA DE INTERPRETES EN BUSQUEDA-->
     <div class="interp-count-display">
-      <span>Intérpretes notificados</span>
-      <span id="notif-count"></span>
+        <span>Intérpretes notificados</span>
+        <span id="notif-count"></span>
     </div>
     <button class="btn btn-ghost" onclick="cancelarLlamada()">❌ Cancelar</button>
-  </div>
+    </div>
 </div>
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script src="../../assets/js/script.js"></script>
