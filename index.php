@@ -24,13 +24,14 @@ if(isset($_SESSION['id_usuario'])){
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INTERVOZ - Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="card">
-    <h2>Intervoz</h2>
+    <img src="assets/img/Intervoz.png" alt="Intervoz" class="logo">
     <p style="text-align:center; font-size: 0.9em; color: #666;">Plataforma de Intérpretes</p>
     
     <form id="loginForm" method="POST">
