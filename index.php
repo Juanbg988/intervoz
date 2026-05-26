@@ -31,7 +31,7 @@ if(isset($_SESSION['id_usuario'])){
 <body>
 
 <div class="card">
-    <img src="assets/img/Intervoz.png" alt="Intervoz" class="logo">
+    <img src="/assets/img/Intervoz.png" alt="Intervoz" class="logo">
     <p style="text-align:center; font-size: 0.9em; color: #666;">Plataforma de Intérpretes</p>
     
     <form id="loginForm" method="POST">
