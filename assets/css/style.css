@@ -14,15 +14,14 @@
     background: var(--bg3);
     border: 1.5px solid var(--border);
     border-radius: var(--r2);
-    padding: 24px 16px;
+    padding: 20px;
     cursor: pointer;
-    transition: all 0.25s ease;
-    display: flex; flex-direction: column;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
-    color: var(--text);
-    font-family: var(--font-b);
+    gap: 10px;
     text-align: center;
+    transition: all 0.25s ease;
 }
 
 .role-btn:hover {
@@ -37,8 +36,6 @@
 }*/
 
 .role-icon {
-    width: 56px;
-    height: 56px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -56,7 +53,6 @@
 
 .role-name {
     font-family: var(--font-h);
-    font-size: 15px;
     font-weight: 700;
 }
 
@@ -74,18 +70,18 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 }
 
 .avatar {
-    width: 48px;
-    height: 48px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
+    background:#eee;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
-    font-weight: 700;
+    font-size: 28px;
     flex-shrink: 0;
 }
 
@@ -95,25 +91,23 @@
 
 .user-name {
     font-family: var(--font-h);
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .user-role {
-    font-size: 13px;
     color: var(--text2);
-    margin-top: 2px;
+    font-size: 14px;
 }
 
 .logout-btn {
-    margin: 0;
-    padding: 12px;
-    width: 8%;
-    height: 100%;
+    width: 48px;
+    height: 48px;
+    padding: 0px;
     background: none;
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    color: var(--text3);
+    border-radius: 50%;
+    background:#eee;
+    color: #333;
     cursor: pointer;
     font-size: 18px;
     transition: all 0.2s;
@@ -122,7 +116,7 @@
 
 .logout-btn:hover {
     border-color: #cecece;
-    color: #6e7272;
+    color: #ebebeb;
 }
 
 /*  ============================================================
@@ -190,7 +184,91 @@
     background: #0faa48;
 }
 
+/* =========================================================
+TOGGLE DISPONIBILIDAD
+========================================================= */
 
+.availability-toggle{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:15px;
+
+    background:#f8f8f8;
+
+    border-radius:12px;
+
+    margin-bottom:20px;
+}
+
+.toggle-track{
+    width:60px;
+    height:30px;
+
+    background:#ccc;
+
+    border-radius:999px;
+
+    position:relative;
+
+    transition:.3s;
+}
+
+.toggle-track.on{
+    background:#2ecc71;
+}
+
+.toggle-thumb{
+    width:24px;
+    height:24px;
+
+    background:white;
+
+    border-radius:50%;
+
+    position:absolute;
+
+    top:3px;
+    left:3px;
+
+    transition:.3s;
+}
+
+.toggle-track.on .toggle-thumb{
+    left:33px;
+}
+
+/* =========================================================
+STATUS
+========================================================= */
+
+.status-panel{
+    text-align:center;
+    margin:25px 0;
+}
+
+.status-text{
+    font-size:22px;
+    font-weight:bold;
+}
+
+/* =========================================================
+LENGUAS
+========================================================= */
+
+.langs-display{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.lang-chip{
+    background:#eef4ff;
+    padding:10px 15px;
+    border-radius:999px;
+    font-size:14px;
+}
 
 /*  ============================================================
     SOLICITANTE - DASHBOARD
@@ -220,19 +298,18 @@
 }
 
 
-
 /* ============================================================
-   LLAMADA
+    LLAMADA
    ============================================================ */
 .call-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 24px; 
-  padding: 40px 36px;
-  width: 100%; 
-  max-width: 420px;
-  box-shadow: var(--shadow);
-  text-align: center;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 24px; 
+    padding: 40px 36px;
+    width: 100%; 
+    max-width: 420px;
+    box-shadow: var(--shadow);
+    text-align: center;
 }
 
 /* Llamada entrante (intérprete) */
@@ -464,6 +541,7 @@
     justify-content: center;
     font-size: 30px;
 }
+
 .interp-count-display {
     background: var(--bg3);
     border: 1px solid var(--border);
