@@ -2,30 +2,81 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <title>Intervoz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Intervoz - Llamada Entrante</title>
+    <link rel="icon" type="image/png" href="../../assets/img/icono.ico">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    </head>
-    <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
 <!-- ============================================================
     PAGE: LLAMADA ENTRANTE (INTÉRPRETE)
     ============================================================ -->
-<div class="page active" id="page-incoming">
-    <div class="card">
-    <div class="incoming-avatar">🙋</div>
-    <div class="incoming-label">Llamada entrante</div>
-    <div class="incoming-name" id="incoming-caller">{nombre del usuario}</div>
-    <div class="incoming-lang">Lengua: <strong id="incoming-lang-label" style="color:var(--coral)">{lengua}</strong></div>
-    <div class="incoming-rings">
-        <div class="ring-dot"></div><div class="ring-dot"></div><div class="ring-dot"></div>
-    </div>
-    <div class="call-actions">
-        <button class="call-btn reject" onclick="rechazarLlamada()" title="Rechazar">📵</button>
-        <button class="call-btn accept" onclick="aceptarLlamada()" title="Aceptar">📞</button>
-    </div>
-    <p style="font-size:12px;color:var(--text3);margin-top:16px">Entrante</p>
-    </div>
-</div>
+<main class="incoming-page">
+
+    <section class="incoming-card">
+
+        <div class="incoming-lines incoming-lines-top"></div>
+        <div class="incoming-lines incoming-lines-bottom"></div>
+
+        <img src="../../assets/img/Intervoz.png" alt="Intervoz" class="logo">
+
+        <div class="incoming-avatar">
+            <div class="incoming-avatar-ring">
+                <span>🙋</span>
+            </div>
+        </div>
+
+        <div class="incoming-badge">
+            <i class="fa-solid fa-phone-volume"></i>
+            LLAMADA ENTRANTE
+        </div>
+
+        <h1 id="incoming-caller">Solicitante</h1>
+
+        <p class="incoming-lang">
+            Lengua:
+            <strong id="incoming-lang-label">Lengua no especificada</strong>
+        </p>
+
+        <div class="incoming-info-box">
+            <i class="fa-solid fa-info"></i>
+            <p>
+                Esta solicitud requiere tu interpretación.
+                <br>
+                Responde para iniciar la llamada.
+            </p>
+        </div>
+
+        </div>
+            <div class="incoming-actions">
+            <div class="incoming-action-item">
+                <button class="incoming-call-btn reject" onclick="rechazarLlamada()" title="Rechazar">
+                    <i class="fa-solid fa-phone-slash"></i>
+                </button>
+                <p>Rechazar</p>
+            </div>
+
+            <div class="incoming-action-item">
+                <button class="incoming-call-btn accept" onclick="aceptarLlamada()" title="Responder">
+                    <i class="fa-solid fa-phone"></i>
+                </button>
+                <p>Responder</p>
+            </div>
+        </div>
+
+        <div class="incoming-footer">
+            <span></span>
+            <div>
+                <i class="fa-solid fa-phone"></i>
+            </div>
+            <span></span>
+        </div>
+
+        <p class="incoming-status">Entrante</p>
+    </section>
+</main>
+
 <script src="../../assets/js/config.js"></script>
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script>
@@ -36,52 +87,52 @@ const socket = io(SOCKET_URL, {
 
 const id_interprete = localStorage.getItem('id_interprete');
 
-const lenguas =
-JSON.parse(
-    localStorage.getItem('lenguas_interprete')
-);
+const lenguas = JSON.parse(localStorage.getItem('lenguas_interprete') || '[]');
+
+const solicitudActual = JSON.parse(localStorage.getItem('solicitud_actual') || 'null');
+
+if (solicitudActual) {
+    document.getElementById('incoming-caller').innerText =
+        solicitudActual.solicitante ||
+        solicitudActual.nombre_solicitante ||
+        solicitudActual.nombre ||
+        'Solicitante';
+
+    document.getElementById('incoming-lang-label').innerText =
+        solicitudActual.lengua ||
+        solicitudActual.nombre_lengua ||
+        'Lengua no especificada';
+}
 
 socket.emit('registrarInterprete', {
     id_interprete: id_interprete,
     lenguas: lenguas
 });
 
-    socket.on('llamadaYaAceptada', () => {
-
+socket.on('llamadaYaAceptada', () => {
     alert('La llamada ya fue aceptada');
-
-    window.location.href =
-    '../interprete/dashboard.php';
-
+    window.location.href = '../interprete/dashboard.php';
 });
 
 socket.on('entrarSala', (data)=>{
-
-    localStorage.setItem(
-        'roomName',
-        data.roomName
-    );
-
-    window.location.href =
-    'llamadaActiva.html';
-
+    localStorage.setItem('roomName', data.roomName);
+    window.location.href = 'llamadaActiva.html';
 });
 
 let aceptando = false;
 
 function aceptarLlamada(){
-    if(aceptando){
-        return;
-    }
+    if(aceptando) return;
 
     aceptando = true;
 
-    const solicitud =
-    JSON.parse(
-        localStorage.getItem(
-            'solicitud_actual'
-        )
-    );
+    const solicitud = JSON.parse(localStorage.getItem('solicitud_actual'));
+
+    if (!solicitud || !solicitud.id_solicitud) {
+        alert('No se encontró la solicitud de llamada.');
+        aceptando = false;
+        return;
+    }
 
     socket.emit('aceptarLlamada', {
         id_solicitud: solicitud.id_solicitud,
@@ -90,16 +141,12 @@ function aceptarLlamada(){
 }
 
 function rechazarLlamada(){
-    window.location.href =
-    '../interprete/dashboard.php';
+    window.location.href = '../interprete/dashboard.php';
 }
 
 socket.on('llamadaCancelada',()=>{
-
     alert('La llamada fue cancelada');
-
-    window.location.href =
-    '../interprete/dashboard.php';
+    window.location.href = '../interprete/dashboard.php';
 
 });
 

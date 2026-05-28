@@ -1,70 +1,119 @@
-<?php include '../../conexion.php'; 
+<?php
+include '../../conexion.php';
 session_start();
 
-if(!isset($_SESSION['id_usuario'])){
+if (!isset($_SESSION['id_usuario'])) {
     header("Location: ../../index.php");
     exit();
 }
 
-if($_SESSION['rol'] != 'solicitante'){
-    header("Location: index.php");
+if ($_SESSION['rol'] != 'solicitante') {
+    header("Location: ../../index.php");
     exit();
 }
 
-// Obtener lenguas
 $sqlLenguas = "SELECT * FROM lengua ORDER BY nombre ASC";
 $resultLenguas = mysqli_query($conn, $sqlLenguas);
 
+$nombreUsuario = !empty($_SESSION['nombre']) ? $_SESSION['nombre'] : 'Usuario';
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <title>Intervoz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Intervoz - Solicitante</title>
+    <link rel="icon" type="image/png" href="../../assets/img/icono.ico">
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
-<div class="card" style="width:600px; height:360px; position: relative;">
-    
-    <div style="position: absolute; top: -25px; right: 10px; font-weight: bold; color: #555;">
-        Solicitante
-    </div>
+<main class="solicitante-page">
 
-    <div class="user-header" style="margin-bottom: 30px;">
-        <div class="avatar" id="avatar-solic" style="font-size: 32px;">👤</div>
-        <div class="user-info">
-            <div class="user-name" id="name-solic" style="font-size: 28px; font-weight: normal;">
-                <?= !empty($_SESSION['nombre']) ? $_SESSION['nombre'] : 'User' ?>
+    <section class="solicitante-card">
+
+        <img src="../../assets/img/Intervoz.png" alt="Intervoz" class="logo">
+
+        <header class="solicitante-header">
+            <div class="solicitante-user">
+                <div class="solicitante-avatar">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                
+                <div>
+                    <h1><?= htmlspecialchars($nombreUsuario) ?></h1>
+                    <p>Configura tus preferencias de llamada</p>
+                </div>
             </div>
-        </div>
-        <button class="logout-btn" onclick="window.location.href = '../../logout.php'" title="Cerrar sesión" style="margin-left: auto;">✕</button>
-    </div>
 
-    <div class="quick-action">
-        
-        <div class="form-group" style="margin-bottom: 20px;">
-            <select id="lenguas" name="lenguas" style="width:100%; padding:12px; margin-bottom:12px; cursor:pointer;" required>
-                <option value="">Lengua</option>
-                <?php
-                while($lengua = mysqli_fetch_assoc($resultLenguas)){
-                ?>
-                    <option value="<?= $lengua['id_lengua'] ?>" >
-                        <?= $lengua['nombre'] ?>
-                    </option>
-                <?php }?>
-            </select>
-            <div class="lang-list" id="lang-list-solic" style="display:none;"></div>
-        </div>
+            <button 
+                class="solicitante-logout" 
+                onclick="window.location.href='../../logout.php'" 
+                title="Cerrar sesión"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </header>
 
-        <div class="form-group" style="display: flex; gap: 15px; margin-bottom: 35px; align-items: center;">
-            <select id="municipios" name="municipios" style="width:100%; padding:12px; margin-bottom:12px; cursor:pointer;" required>
-                    <option value="">Municipio</option>
-            </select>
-            <button class="btn-municipio">✚</button>
-        </div>
+        <div class="solicitante-line"></div>
+
+        <section class="call-panel">
+
+            <div class="field-block">
+                <div class="field-title">
+                    <div class="field-icon">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+
+                    <div>
+                        <h2>Lengua</h2>
+                        <p>Selecciona el idioma en el que deseas interpretar</p>
+                    </div>
+                </div>
+
+                <select id="lenguas" name="lenguas" required>
+                    <option value="">Selecciona una lengua</option>
+                    <?php while ($lengua = mysqli_fetch_assoc($resultLenguas)) { ?>
+                        <option value="<?= $lengua['id_lengua'] ?>">
+                            <?= htmlspecialchars($lengua['nombre']) ?>
+                        </option>
+                    <?php } ?>
+                </select>
+            </div>
+
+            <div class="panel-divider"></div>
+
+            <div class="field-block">
+                <div class="field-title">
+                    <div class="field-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+
+                    <div>
+                        <h2>Municipio</h2>
+                        <p>Selecciona el municipio desde el que realizarás la llamada</p>
+                    </div>
+                </div>
+
+                <div class="municipio-row">
+                    <select id="municipios" name="municipios" required>
+                        <option value="">Selecciona un municipio</option>
+                    </select>
+
+                    <button type="button" class="btn-add-municipio">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <i class="fa-solid fa-info"></i>
+                <p>Asegúrate de seleccionar la lengua y el municipio correctos para brindar un mejor servicio.</p>
+            </div>
+
+        </section>
 
         <div id="selected-lang-section" style="display:none">
             <div class="selected-lang-display">
@@ -74,40 +123,39 @@ $resultLenguas = mysqli_query($conn, $sqlLenguas);
             </div>
         </div>
 
-        <div style="text-align: center;">
-            <button class="btn btn-coral" id="btn-llamar" onclick="iniciarLlamadaSolicitante()" style="padding: 12px 50px; font-size: 18px; min-width: 180px;">
+        <div class="call-action">
+            <button class="btn-call" id="btn-llamar" onclick="iniciarLlamadaSolicitante()">
+                <i class="fa-solid fa-phone"></i>
                 Llamar
             </button>
         </div>
 
-    </div>
+        <div class="status-grid" style="display:none;">
+            <span id="available-count">0</span>
+        </div>
 
-    <div class="status-grid" style="display: none;">
-        <span id="available-count">0</span>
-    </div>
+    </section>
 
-</div>
+</main>
 <script src="../../assets/js/config.js"></script>
 <script src="../../assets/js/script.js"></script>
 <script>
 
-document
-.getElementById('lenguas')
-.addEventListener('change', async ()=>{
+document.getElementById('lenguas').addEventListener('change', async ()=>{
 
-    const idLengua =
-    document.getElementById('lenguas').value;
+    const idLengua = document.getElementById('lenguas').value;
+    const select = document.getElementById('municipios');
 
-    const response =
-    await fetch(
-        `${API_URL}/api/obtenerMunicipios.php?id_lengua=${idLengua}`
-    );
+    select.innerHTML = '<option value="">Cargando municipios...</option>';
 
-    const municipios =
-    await response.json();
+    if (!idLengua) {
+        select.innerHTML = '<option value="">Selecciona un municipio</option>';
+        return;
+    }
 
-    const select =
-    document.getElementById('municipios');
+    const response = await fetch(`${API_URL}/api/obtenerMunicipios.php?id_lengua=${idLengua}`);
+    const municipios = await response.json();
+
 
     select.innerHTML =
     '<option value="">Municipio</option>';
@@ -126,18 +174,14 @@ document
 
 </script>
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
 <script>
 const socket = io('https://intervoz-socket.onrender.com', {
     transports: ['websocket'],
     secure: true
 });
-</script>
-<script>
 
-localStorage.setItem(
-    'rol',
-    'solicitante'
-);
+localStorage.setItem('rol','solicitante');
 
 socket.emit('registrarSolicitante', {
     id_usuario: <?= $_SESSION['id_usuario'] ?>

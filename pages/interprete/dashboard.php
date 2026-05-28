@@ -24,64 +24,102 @@ if(mysqli_num_rows($resultInterprete) <= 0){
 }
 
 $interprete = mysqli_fetch_assoc($resultInterprete);
-
 $id_interprete = $interprete['id_interprete'];
 
+$nombreUsuario = !empty($_SESSION['nombre']) ? $_SESSION['nombre'] : 'Intérprete';
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <title>Intervoz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Intervoz - Intérprete</title>
+    <link rel="icon" type="image/png" href="../../assets/img/icono.ico">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    </head>
-    <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
 <!-- ============================================================
     PAGE: INICIO INTÉRPRETE
     ============================================================ -->
 
-  <div class="card" style="width:600px; height:450px;">
-    <!-- Header usuario -->
-    <div class="user-header">
-      <div class="avatar" id="avatar-interp">👤</div> <!--IMPLEMENTAR INICIAL DEL USUARIO-->
-      <div class="user-info">
-        <div class="user-name" id="name-interp"><?= $_SESSION['nombre'] ?></div> <!--IMPLEMENTAR NOMBRE DEL USUARIO-->
-        <div class="user-role">Voluntario Intérprete</div>
-      </div>
-      <button class="logout-btn" onclick="window.location.href = '../../logout.php'" title="Cerrar sesión">⊘</button>
-    </div>
+<main class="interprete-page">
 
-    <!-- Toggle disponibilidad -->
-    <div class="availability-toggle" onclick="toggleAvailability()">
-      <div>
-        <h3>Disponibilidad</h3>
-        <p style="font-size:13px;color:var(--text2);margin-top:3px" id="avail-label">Estoy disponible para recibir llamadas</p>
-      </div>
-      <div class="toggle-track on" id="avail-toggle">
-        <div class="toggle-thumb"></div>
-      </div>
-    </div>
+    <section class="interprete-card">
 
-    <!-- Estado -->
-    <div class="status-panel">
-      <div class="status-pulse waiting" id="status-pulse">
-        <span class="status-icon">👂</span>
-      </div>
-      <div class="status-text" id="status-text">En espera</div>
-      <div class="status-sub" id="status-sub">para recibir llamadas</div>
-    </div>
+        <img src="../../assets/img/Intervoz.png" alt="Intervoz" class="logo">
 
-    <!-- Lenguas -->
-    <div>
-      <p style="font-size:12px;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em;font-weight:600">Tus lenguas</p>
-      <div class="langs-display" id="interp-langs">
-        
-      </div>
-    </div>
-  </div>
-  <script src="../../assets/js/config.js"></script>
+        <header class="interprete-header">
+            <div class="interprete-user">
+                <div class="interprete-avatar">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+
+                <div>
+                    <h1><?= htmlspecialchars($nombreUsuario) ?></h1>
+                    <p>Intérprete</p>
+                </div>
+            </div>
+
+            <button 
+                class="interprete-logout" 
+                onclick="window.location.href='../../logout.php'" 
+                title="Cerrar sesión"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </header>
+
+        <!-- Toggle disponibilidad -->
+        <section class="availability-card" onclick="toggleAvailability()">
+            <div class="availability-info">
+                <div class="availability-icon">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+
+                <div>
+                    <h2>Disponibilidad</h2>
+                    <p id="avail-label">Estoy disponible para recibir llamadas</p>
+                </div>
+            </div>
+
+            <div class="toggle-track on" id="avail-toggle">
+                <div class="toggle-thumb"></div>
+            </div>
+        </section>
+
+        <!-- Estado -->
+        <section class="waiting-card">
+            <div class="waiting-icon" id="status-pulse">
+                <i class="fa-regular fa-clock"></i>
+            </div>
+
+            <div class="waiting-content">
+                <h2 id="status-text">En espera</h2>
+                <p id="status-sub">para recibir llamadas</p>
+
+            </div>
+        </section>
+
+        <section class="languages-section">
+            <div class="languages-title">
+                <i class="fa-solid fa-globe"></i>
+                <h2>TUS LENGUAS</h2>
+            </div>
+
+            <div class="languages-line"></div>
+
+            <div class="langs-display" id="interp-langs"></div>
+        </section>
+
+        <div class="interpreter-info-box">
+            <i class="fa-solid fa-info"></i>
+            <p>Mantén tu disponibilidad actualizada para brindar el mejor servicio.</p>
+        </div>
+    </section>
+</main>
+<script src="../../assets/js/config.js"></script>
 <script src="../../assets/js/script.js"></script>
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script>
@@ -91,8 +129,7 @@ const socket = io('https://intervoz-socket.onrender.com', {
 });
 
 // VARIABLES
-const ID_INTERPRETE =
-<?= $id_interprete ?>;
+const ID_INTERPRETE = <?= $id_interprete ?>;
 
 localStorage.setItem('rol', 'interprete');
 
@@ -102,88 +139,79 @@ REGISTRAR INTERPRETE
 ========================================
 */
 async function registrarInterprete(){
-  try{
-    const response =
-    await fetch(`${API_URL}/api/obtenerVariantesInterprete.php`);
+    try{
+        const response = await fetch(`${API_URL}/api/obtenerVariantesInterprete.php`);
+        const data = await response.json();
 
-    const data =
-    await response.json();
+        console.log(data);
 
-    console.log(data);
+        localStorage.setItem('id_interprete',ID_INTERPRETE);
+        localStorage.setItem('lenguas_interprete',JSON.stringify(data.lenguas));
 
-    localStorage.setItem(
-        'id_interprete',
-        ID_INTERPRETE
-    );
+        const contenedor = document.getElementById('interp-langs');
+        contenedor.innerHTML = '';
 
-    localStorage.setItem(
-        'lenguas_interprete',
-        JSON.stringify(data.lenguas)
-    );
+        if (!data.lenguas || data.lenguas.length === 0) {
+            contenedor.innerHTML = `
+                <div class="empty-languages">
+                    No tienes lenguas registradas.
+                </div>
+            `;
+            return;
+        }
 
-    /*
-    ========================================
-    MOSTRAR LENGUAS EN DASHBOARD
-    ========================================
-    */
+        data.lenguas.forEach((item, index) => {
+            const iniciales = item.lengua.substring(0, 2).toUpperCase();
+            contenedor.innerHTML += `
+                <div class="language-card">
+                    <div class="language-initials">${iniciales}</div>
 
-    const contenedor =
-    document.getElementById('interp-langs');
+                    <div class="language-data">
+                        <h3>${item.lengua}</h3>
+                        <p>${item.municipio}</p>
+                    </div>
+                </div>
+            `;
+        });
 
-    contenedor.innerHTML = '';
+        socket.emit('registrarInterprete', {
+            id_interprete: ID_INTERPRETE,
+            lenguas: data.lenguas
+        });
 
-    data.lenguas.forEach((item)=>{
-
-        contenedor.innerHTML += `
-            <div class="lang-chip">
-                ${item.lengua}
-                <br>
-                <small>${item.municipio}</small>
-            </div>
-        `;
-    });
-
-    socket.emit('registrarInterprete', {
-        id_interprete: ID_INTERPRETE,
-        lenguas: data.lenguas
-    });
-  } catch(error){
-    console.error(error);
-  }
+    } catch(error){
+      console.error(error);
+    }
 }
 
 registrarInterprete();
 
 socket.on('llamadaEntrante', (data) => {
-
-    localStorage.setItem(
-        'solicitud_actual',
-        JSON.stringify(data)
-    );
-
-    window.location.href =
-    '../call/llamadaEntrante.html';
-
+    localStorage.setItem('solicitud_actual', JSON.stringify(data));
+    window.location.href = '../call/llamadaEntrante.html';
 });
 
-async function toggleAvailability(){
+async function toggleAvailability() {
+    const toggle = document.getElementById('avail-toggle');
+    const label = document.getElementById('avail-label');
+    const statusText = document.getElementById('status-text');
+    const statusSub = document.getElementById('status-sub');
 
-    const toggle =
-    document.getElementById('avail-toggle');
-
-    const activo =
-    toggle.classList.contains('on');
-
-    const nuevoEstado =
-    !activo;
+    const activo = toggle.classList.contains('on');
+    const nuevoEstado = !activo;
 
     toggle.classList.toggle('on');
 
-    /*
-    ===============================
-    API PHP
-    ===============================
-    */
+    if (nuevoEstado) {
+        label.textContent = 'Estoy disponible para recibir llamadas';
+        statusText.textContent = 'En espera';
+        statusSub.textContent = 'para recibir llamadas';
+    } else {
+        label.textContent = 'No estoy disponible para recibir llamadas';
+        statusText.textContent = 'No disponible';
+        statusSub.textContent = 'activa tu disponibilidad';
+    }
+
     try{
       await fetch(`${API_URL}/api/disponibilidad.php`, {
 
@@ -199,19 +227,12 @@ async function toggleAvailability(){
         }
       );
 
-      /*
-      ===============================
-      SOCKET
-      ===============================
-      */
-
       socket.emit('cambiarDisponibilidad', {
           id_interprete: ID_INTERPRETE,
           disponible: nuevoEstado
-        }
-      );
-    }catch(error){
-      console.error(error);
+      });
+    } catch(error){
+        console.error(error);
     }
 }
 

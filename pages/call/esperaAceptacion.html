@@ -2,28 +2,63 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <title>Intervoz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Intervoz - Esperando Intérprete</title>
+    <link rel="icon" type="image/png" href="../../assets/img/icono.ico">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    </head>
-    <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
 <!-- ============================================================
     PAGE: ESPERANDO ACEPTACIÓN (SOLICITANTE)
     ============================================================ -->
-<div class="page active" id="page-waiting">
-    <div class="card">
-    <!--<div class="incoming-label" style="color:var(--coral)">Buscando intérprete</div>-->
-    <div style="font-family:var(--font-h);font-size:20px;font-weight:800;margin-bottom:6px">Buscando intérprete...</div>
-    <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:20px">
-        Notificando a todos los intérpretes de<br/><strong id="waiting-lang-label" style="color:var(--coral)">{lengua}</strong> disponibles.
-    </p> <!-- ASIGNAR LENGUA DE INTERPRETES EN BUSQUEDA-->
-    <div class="interp-count-display">
-        <span>Intérpretes notificados</span>
-        <span id="notif-count"></span>
-    </div>
-    <button class="btn btn-ghost" onclick="cancelarLlamada()">❌ Cancelar</button>
-    </div>
-</div>
+
+<main class="waiting-page">
+    <section class="waiting-accept-card">
+        <img src="../../assets/img/Intervoz.png" alt="Intervoz" class="logo">
+        <div class="waiting-headset">
+            <i class="fa-solid fa-headset"></i>
+            <div class="waiting-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <h1>Buscando intérprete...</h1>
+
+        <p class="waiting-text">
+            Notificando a todos los intérpretes de
+            <strong id="waiting-lang-label">la lengua seleccionada</strong>
+            disponibles.
+        </p>
+
+        <div class="notified-box">
+            <div class="notified-icon">
+                <i class="fa-solid fa-user-group"></i>
+            </div>
+
+            <div>
+                <h2>Intérpretes notificados</h2>
+            </div>
+        </div>
+
+        <div class="waiting-info-box">
+            <i class="fa-solid fa-info"></i>
+            <p>
+                Te conectaremos con el primer intérprete disponible.
+                Por favor, espera un momento.
+            </p>
+        </div>
+
+        <button class="btn-cancel-waiting" onclick="cancelarLlamada()">
+            <i class="fa-solid fa-xmark"></i>
+            Cancelar
+        </button>
+
+    </section>
+</main>
+
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script src="../../assets/js/script.js"></script>
 <script>
@@ -33,78 +68,43 @@ const socket = io('https://intervoz-socket.onrender.com', {
 });
 
 const idSolicitud = localStorage.getItem('id_solicitud');
+const idUsuario = localStorage.getItem('id_usuario');
+const nombreLengua = localStorage.getItem('nombre_lengua') || 'la lengua seleccionada';
 
-const idUsuario =
-localStorage.getItem('id_usuario');
+document.getElementById('waiting-lang-label').innerText = nombreLengua;
 
-/*
-====================================
-REGISTRAR SOLICITANTE
-====================================
-*/
-
-socket.emit(
-    'registrarSolicitante',
-    {
+socket.emit('registrarSolicitante', {
         id_usuario:idUsuario
     }
 );
 
-/*
-====================================
-RECONECTAR SOLICITUD
-====================================
-*/
-
-socket.emit(
-    'reconectarSolicitante',
-    {
+socket.emit('reconectarSolicitante',{
         id_solicitud: idSolicitud
     }
 );
 
-/*
-====================================
-LLAMADA ACEPTADA
-====================================
-*/
 
-socket.on(
-    'llamadaAceptada',
-    (data)=>{
-
-        console.log(
-            'ENTRAR A JITSI',
-            data
-        );
-
-        localStorage.setItem(
-            'roomName',
-            data.roomName
-        );
-
-        window.location.href =
-        'llamadaActiva.html';
-
+socket.on('llamadaAceptada', (data)=>{
+        console.log('ENTRAR A JITSI',data);
+        localStorage.setItem('roomName',data.roomName);
+        window.location.href = 'llamadaActiva.html';
     }
 );
 
-/*
-====================================
-INTERPRETES NOTIFICADOS
-====================================
-*/
 socket.on(
-    'interpretesNotificados',
-    (data)=>{
-
-        document.getElementById(
-            'notif-count'
-        ).innerText =
-        data.total;
-
+    'interpretesNotificados', (data)=>{
+        document.getElementById('notif-count').innerText = data.total;
     }
 );
+
+function cancelarLlamada() {
+    socket.emit('cancelarLlamada', {
+        id_solicitud: idSolicitud,
+        id_usuario: idUsuario
+    });
+
+    window.location.href = '../solicitante/dashboard.php';
+}
 </script>
 </body>
 </html>
