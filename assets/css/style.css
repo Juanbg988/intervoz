@@ -565,6 +565,7 @@ body{
 }
 
 .solicitante-user h1 {
+    font-family: 'Segoe UI';
     font-size: clamp(2rem, 4vw, 2.7rem);
     color: #071b4d;
     line-height: 1.1;
@@ -572,6 +573,7 @@ body{
 }
 
 .solicitante-user p {
+    font-family: 'Segoe UI';
     font-size: clamp(1rem, 2vw, 1.35rem);
     color: #586b91;
 }
