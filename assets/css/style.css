@@ -635,12 +635,14 @@ body{
 }
 
 .field-title h2 {
+    font-family: 'Segoe UI';
     color: #071b4d;
     font-size: clamp(1.25rem, 2.4vw, 1.65rem);
     margin-bottom: 8px;
 }
 
 .field-title p {
+    font-family: 'Segoe UI';
     color: #586b91;
     font-size: clamp(0.95rem, 2vw, 1.15rem);
     line-height: 1.4;
@@ -717,6 +719,7 @@ body{
 }
 
 .info-box p {
+    font-family: 'Segoe UI';
     color: #586b91;
     font-size: clamp(0.95rem, 2vw, 1.12rem);
     line-height: 1.6;
@@ -1454,6 +1457,7 @@ body{
 }
 
 .document-upload h3 {
+    font-family: 'Segoe UI';
     text-align: center;
     color: #071b4d;
     font-size: 1.12rem;
