@@ -26,7 +26,7 @@ $resultLenguas = mysqli_query($conn, $sqlLenguas);
         <div class="register-lines register-lines-top"></div>
         <div class="register-dots"></div>
 
-        <img src="assets/img/InterVoz.png" alt="Intervoz" class="logo">
+        <img src="assets/img/Intervoz-logo.png" alt="Intervoz" class="logo">
 
         <h1>Crear cuenta</h1>
 

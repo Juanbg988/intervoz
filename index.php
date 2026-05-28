@@ -75,7 +75,7 @@ if (isset($_POST['ingresar'])) {
 
         <div class="login-card">
 
-            <img src="assets/img/InterVoz.png" alt="Intervoz" class="logo">
+            <img src="assets/img/Intervoz-logo.png" alt="Intervoz" class="logo">
 
             <h1>Plataforma de Intérpretes</h1>
             <p class="subtitle">Accede a tu cuenta para continuar</p>

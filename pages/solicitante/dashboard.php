@@ -34,7 +34,7 @@ $nombreUsuario = !empty($_SESSION['nombre']) ? $_SESSION['nombre'] : 'Usuario';
 
     <section class="solicitante-card">
 
-        <img src="../../assets/img/InterVoz.png" alt="Intervoz" class="logo">
+        <img src="../../assets/img/Intervoz-logo.png" alt="Intervoz" class="logo">
 
         <header class="solicitante-header">
             <div class="solicitante-user">
