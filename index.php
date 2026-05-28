@@ -24,7 +24,7 @@ if (isset($_POST['ingresar'])) {
     $query = "
         SELECT usuario.*, perfil.rol
         FROM usuario
-        INNER JOIN Perfil ON usuario.id_usuario = perfil.id_usuario
+        INNER JOIN perfil ON usuario.id_usuario = perfil.id_usuario
         WHERE correo='$correo'
         AND password='$pass'
     ";
@@ -61,10 +61,9 @@ if (isset($_POST['ingresar'])) {
     <meta charset="UTF-8">
     <title>INTERVOZ - Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="icon" type="image/png" href="assets/img/icono.ico">
     <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
@@ -76,7 +75,7 @@ if (isset($_POST['ingresar'])) {
 
         <div class="login-card">
 
-            <img src="assets/img/Intervoz.png" alt="Intervoz" class="logo">
+            <img src="assets/img/InterVoz.png" alt="Intervoz" class="logo">
 
             <h1>Plataforma de Intérpretes</h1>
             <p class="subtitle">Accede a tu cuenta para continuar</p>

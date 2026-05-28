@@ -48,7 +48,7 @@ $nombreUsuario = !empty($_SESSION['nombre']) ? $_SESSION['nombre'] : 'Intérpret
 
     <section class="interprete-card">
 
-        <img src="../../assets/img/Intervoz.png" alt="Intervoz" class="logo">
+        <img src="../../assets/img/InterVoz.png" alt="Intervoz" class="logo">
 
         <header class="interprete-header">
             <div class="interprete-user">
