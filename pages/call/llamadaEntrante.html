@@ -150,6 +150,10 @@ socket.on('llamadaCancelada',()=>{
 
 });
 
+socket.on('connect', () => {
+    console.log('Socket llamadaEntrante:', socket.id);
+});
+
 </script>
 </body>
 </html>

@@ -180,7 +180,7 @@ async function registrarInterprete(){
         });
 
     } catch(error){
-      console.error(error);
+        console.error(error);
     }
 }
 
@@ -213,28 +213,36 @@ async function toggleAvailability() {
     }
 
     try{
-      await fetch(`${API_URL}/api/disponibilidad.php`, {
+        await fetch(`${API_URL}/api/disponibilidad.php`, {
 
-          method:'POST',
+            method:'POST',
 
-          headers:{
-              'Content-Type':'application/json'
-          },
+            headers:{
+                'Content-Type':'application/json'
+            },
 
-          body: JSON.stringify({
-              disponible: nuevoEstado ? 1 : 0
-          })
-        }
-      );
+            body: JSON.stringify({
+                disponible: nuevoEstado ? 1 : 0
+            })
+            }
+        );
 
-      socket.emit('cambiarDisponibilidad', {
-          id_interprete: ID_INTERPRETE,
-          disponible: nuevoEstado
-      });
+        socket.emit('cambiarDisponibilidad', {
+            id_interprete: ID_INTERPRETE,
+            disponible: nuevoEstado
+        });
     } catch(error){
         console.error(error);
     }
 }
+
+socket.on('disconnect', () => {
+    console.log('Socket desconectado');
+});
+
+socket.on('connect', () => {
+    console.log('Socket conectado:', socket.id);
+});
 
 </script>
 </body>
