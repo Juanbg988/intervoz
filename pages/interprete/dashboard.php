@@ -58,7 +58,7 @@ $nombreUsuario = !empty($_SESSION['nombre']) ? $_SESSION['nombre'] : 'Intérpret
 
                 <div>
                     <h1><?= htmlspecialchars($nombreUsuario) ?></h1>
-                    <p>Intérprete</p>
+                    <p>Intérprete voluntario</p>
                 </div>
             </div>
 
